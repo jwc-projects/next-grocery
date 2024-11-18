@@ -1,6 +1,6 @@
 interface GroceryItem {
   itemId: string | null; // null when creating new item
-  name: string;
+  itemName: string;
   qty: string;
 }
 type GroceryList = Array<GroceryItem>;

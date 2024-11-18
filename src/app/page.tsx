@@ -2,7 +2,6 @@ import { getGroceryList, seedDatabase } from "@/actions/database";
 
 export default async function Home() {
   // Fetch list table contents
-  await seedDatabase();
   await getGroceryList();
   // Render list & form
   return (
