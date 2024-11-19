@@ -1,3 +1,4 @@
+"use server";
 import sqlite, { Database } from "sqlite3";
 import DB_SEED from "./seed.json";
 import { GroceryItem } from "@/types/database";
@@ -50,12 +51,15 @@ export async function getGroceryList() {
   const db = openDatabase();
   try {
     const result = await execute(db, "SELECT * FROM List");
-    console.log(result);
+    if (Array.isArray(result)) {
+      return result as Array<GroceryItem>;
+    }
   } catch (error) {
     console.error(error);
   } finally {
     db.close();
   }
+  return [];
 }
 
 export async function addToList(newItem: GroceryItem) {
@@ -77,14 +81,16 @@ export async function addToList(newItem: GroceryItem) {
   }
 }
 
-export async function removeFromList(itemName: string) {
+export async function removeFromList(itemId: number | null) {
   const db = openDatabase();
   try {
-    const result = await execute(
-      db,
-      `DELETE FROM List WHERE itemName="${itemName}"`
-    );
-    console.log(result);
+    if (itemId !== null) {
+      const result = await execute(
+        db,
+        `DELETE FROM List WHERE itemId="${itemId}"`
+      );
+      console.log(result);
+    }
   } catch (error) {
     console.error(error);
   } finally {

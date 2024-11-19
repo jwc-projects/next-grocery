@@ -1,5 +1,5 @@
 interface GroceryItem {
-  itemId: string | null; // null when creating new item
+  itemId: number | null; // null when creating new item
   itemName: string;
   qty: string;
 }
